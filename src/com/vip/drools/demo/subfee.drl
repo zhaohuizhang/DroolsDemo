@@ -1,0 +1,38 @@
+package com.vip.drools.demo
+
+import com.vip.drools.demo.MerchantEntity;
+
+rule activityDayFee
+	// 优惠日，减1元
+	salience 100
+	lock-on-active true
+	when 
+		$merchantEntity : MerchantEntity(activityDay == true)
+	then
+		$merchantEntity.setFee($merchantEntity.getFee() - 1);
+		$merchantEntity.recordLog($merchantEntity.getMerchantName(),"activityDayFee");
+end	
+	
+	
+rule sellMoneyFee
+	// 当月销售总金额达到10000元以上，每满1000元，减1元
+	salience 99
+	lock-on-active true
+	when
+		$merchantEntity : MerchantEntity(sellMoney >= 10000)
+	then
+		$merchantEntity.setFee($merchantEntity.getFee() - $merchantEntity.getSellMoney()/1000);
+		$merchantEntity.recordLog($merchantEntity.getMerchantName(),"sellMoneyFee");
+end
+
+rule sellNumsFee
+	// 当月出货量达到1000件以上，每满30件，减0.05元
+	salience 98
+	when 
+		$merchantEntity : MerchantEntity(sellNums >= 1000)
+	then
+		$merchantEntity.setFee($merchantEntity.getFee()-$merchantEntity.getSellNums()/30*0.05);
+		$merchantEntity.recordLog($merchantEntity.getMerchantName(),"sellNumsFee");
+end
+
+

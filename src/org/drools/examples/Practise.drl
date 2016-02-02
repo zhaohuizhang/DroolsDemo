@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Date;
 import org.drools.examples.StringUtils;
 
-// ¶¨ÒåFACT¶ÔÏó
+// å®šä¹‰FACTå¯¹è±¡
 declare Address
-	@author(quzishen) // ÔªÊı¾İ£¬½öÓÃÓÚÃèÊöĞÅÏ¢£¬ÎŞÖ´ĞĞ¹¦ÄÜ
+	@author(quzishen) // å…ƒæ•°æ®ï¼Œä»…ç”¨äºæè¿°ä¿¡æ¯ï¼Œæ— æ‰§è¡ŒåŠŸèƒ½
 	@createTime(2011-1-24)
 	city : String @maxLengh(100)
 	postno : int
@@ -22,14 +22,14 @@ function void addOrders(Message message){
 // p1
 rule p1
 	salience 100
-	// µ±Ç°¹æÔòÊ¹ÓÃinsert¡¢modifyµÈ²Ù×÷µÄÊ±ºò£¬»áÔÙ´Î´¥·¢µ±Ç°¹æÔò£¬½öÓÃÓÚµ±Ç°¹æÔò£¬
-	// ÆäËû¹æÔò·¢ÉúÉÏÊö²Ù×÷Èç¹ûÖ»Ö´ĞĞÒ»´Î£¬Ê¹ÓÃlock-on-active true
+	// å½“å‰è§„åˆ™ä½¿ç”¨insertã€modifyç­‰æ“ä½œçš„æ—¶å€™ï¼Œä¼šå†æ¬¡è§¦å‘å½“å‰è§„åˆ™ï¼Œä»…ç”¨äºå½“å‰è§„åˆ™ï¼Œ
+	// å…¶ä»–è§„åˆ™å‘ç”Ÿä¸Šè¿°æ“ä½œå¦‚æœåªæ‰§è¡Œä¸€æ¬¡ï¼Œä½¿ç”¨lock-on-active true
 	no-loop  false
-	activation-group "goup1" //¾ßÓĞÏàÍ¬groupÃû³ÆµÄ¹æÔòÖ»ÓĞÒ»¸ö»áÖ´ĞĞ£¬¿ÉÒÔÓÃsalience¿ØÖÆ
+	activation-group "goup1" //å…·æœ‰ç›¸åŒgroupåç§°çš„è§„åˆ™åªæœ‰ä¸€ä¸ªä¼šæ‰§è¡Œï¼Œå¯ä»¥ç”¨salienceæ§åˆ¶
 	when
 		eval(true)
 	then
-		System.out.println("p1 ²âÊÔLHS");
+		System.out.println("p1 æµ‹è¯•LHS");
 end
 
 // p2
@@ -37,11 +37,11 @@ rule p2
 	salience 99
 	no-loop true
 	when
-		// ´«ÈëFACT±ØĞëÊÇMessageÀàĞÍ²¢ÇÒÆäÖĞµÄstatus=0ÎªÌõ¼ş£¬$messageÎªµ±Ç°Ìõ¼şÖ¸Õë
+		// ä¼ å…¥FACTå¿…é¡»æ˜¯Messageç±»å‹å¹¶ä¸”å…¶ä¸­çš„status=0ä¸ºæ¡ä»¶ï¼Œ$messageä¸ºå½“å‰æ¡ä»¶æŒ‡é’ˆ
 		$message:Message((status==0 || status == 1) && message=="Hello World")
 	then
 		System.out.println($message.getFromDB());
-		System.out.println("p2 ²âÊÔ¶àÌõ¼ş"+$message.getStatus());
+		System.out.println("p2 æµ‹è¯•å¤šæ¡ä»¶"+$message.getStatus());
 end
 
 // p3
@@ -49,11 +49,11 @@ rule p3
 	salience 98
 	no-loop true
 	when 
-		// ÕâÀïĞèÒªµÄÃ¿Ò»¸öfact¶¼±ØĞëÍâ²¿´«Èë. Order + Message
+		// è¿™é‡Œéœ€è¦çš„æ¯ä¸€ä¸ªfactéƒ½å¿…é¡»å¤–éƒ¨ä¼ å…¥. Order + Message
 		$order:Order(name=="qu")
 		$message:Message(status==0 && orders contains $order && $order.name=="qu")
 	then
-		System.out.println("p3 ²âÊÔ contains ¶ÔÏó"+$message.getStatus());
+		System.out.println("p3 æµ‹è¯• contains å¯¹è±¡"+$message.getStatus());
 end
 
 // p4
@@ -61,9 +61,9 @@ rule p4
 	salience 97
 	no-loop true
 	when
-		$message:Message(status==0 && names contains "ÍøÒ×" && names.size >= 1)
+		$message:Message(status==0 && names contains "ç½‘æ˜“" && names.size >= 1)
 	then
-		System.out.println("p4 ²âÊÔ contains ×Ö·û´®Öµ"+$message.getNames());
+		System.out.println("p4 æµ‹è¯• contains å­—ç¬¦ä¸²å€¼"+$message.getNames());
 end
 
 // p5
@@ -76,35 +76,35 @@ rule p5
 		Message m = new Message();
 		m.setStatus(1);
 		m.setMessage("new Message");
-		// ÕâÀïinsertÒ»¸ö£¬working memoryÖĞ½«ÓĞ2¸öÁË
+		// è¿™é‡Œinsertä¸€ä¸ªï¼Œworking memoryä¸­å°†æœ‰2ä¸ªäº†
 		insert(m);
-		System.out.println("p5²âÊÔ insert (ĞŞ¸ÄÁËworking memoryµÄmessage£¬»áÔÙ´Î´¥·¢p6¹æÔò)");
+		System.out.println("p5æµ‹è¯• insert (ä¿®æ”¹äº†working memoryçš„messageï¼Œä¼šå†æ¬¡è§¦å‘p6è§„åˆ™)");
 end
 
 // p6
 rule p6
 	salience 95
-	date-expires "2011-01-31 23:59:59" // ÔÚ´ËÖ®Ç°ÓĞĞ§
+	date-expires "2011-01-31 23:59:59" // åœ¨æ­¤ä¹‹å‰æœ‰æ•ˆ
 	when
-		// »áÒ»Ö±±»´¥·¢Ö±µ½Ìõ¼ş²»Âú×ã
+		// ä¼šä¸€ç›´è¢«è§¦å‘ç›´åˆ°æ¡ä»¶ä¸æ»¡è¶³
 		$message:Message(status < 10)
 	then
 		$message.setStatus($message.getStatus()+1);
 		update($message);
-		System.out.println("p6²âÊÔ update");
+		System.out.println("p6æµ‹è¯• update");
 end
 
 // p7
 rule p7
-	date-effective "2011-01-21 16:11:40" // µ½ÁËÊ±¼ä²Å»á´¥·¢
+	date-effective "2011-01-21 16:11:40" // åˆ°äº†æ—¶é—´æ‰ä¼šè§¦å‘
 	no-loop true
 	when
 		$message:Message()
 	then
 		modify($message){
-			setMessage("ĞÂµÄmessage");
+			setMessage("æ–°çš„message");
 		}
-		System.out.println("p7²âÊÔ modify");
+		System.out.println("p7æµ‹è¯• modify");
 end
 
 // p8
@@ -114,7 +114,7 @@ rule p8
 	when
 		$message : Message()
 	then
-		System.out.println("p8 ²âÊÔ  function");
+		System.out.println("p8 æµ‹è¯•  function");
 		addOrders($message);
 		
 		System.out.println($message.getNames());
@@ -128,10 +128,10 @@ rule p9
 		eval(true)
 	then
 		Address address = new Address();
-		address.setCity("º¼Öİ");
+		address.setCity("æ­å·");
 		address.setPostno(111);
 		insert(address);
-		System.out.println("p9 ²âÊÔFACT¶ÔÏó¶¨Òå"+address.getCity());
+		System.out.println("p9 æµ‹è¯•FACTå¯¹è±¡å®šä¹‰"+address.getCity());
 end
 
 // p10
@@ -141,8 +141,8 @@ rule p10
 	when
 		eval(true)
 	then
-		// µ÷ÓÃµÄ·½·¨±ØĞëÊÇ¾²Ì¬µÄ·½·¨
-		System.out.println("p10²âÊÔ·½·¨"+StringUtils.getCount());
+		// è°ƒç”¨çš„æ–¹æ³•å¿…é¡»æ˜¯é™æ€çš„æ–¹æ³•
+		System.out.println("p10æµ‹è¯•æ–¹æ³•"+StringUtils.getCount());
 end
 
 // p11
@@ -168,7 +168,7 @@ rule p11
 		$ct:ComparedTime()
 		$message:Message(time < $ct.ct)
 	then
-		System.out.println("p11 ²âÊÔÊ±¼äÀàĞÍ×Ö¶Î"+$ct.getCt());
+		System.out.println("p11 æµ‹è¯•æ—¶é—´ç±»å‹å­—æ®µ"+$ct.getCt());
 end
 
 query "pcount"

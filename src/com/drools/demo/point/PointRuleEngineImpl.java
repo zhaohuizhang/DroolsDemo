@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.drools.RuleBase;
@@ -33,6 +34,7 @@ public class PointRuleEngineImpl implements PointRuleEngine {
 	public void initEngine() {
 		// 设置日期格式
 		System.setProperty("drools.dateformat", "yyyy-MM-dd HH:mm:ss");
+		System.out.println(new Date());
 		ruleBase = RuleBaseFacatory.getRuleBase();
 		try {
 			PackageBuilder backageBuilder = getPackageBuilderFromDrlFile();

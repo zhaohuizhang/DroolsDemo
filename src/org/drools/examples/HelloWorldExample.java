@@ -20,24 +20,24 @@ import org.drools.spi.Activation;
 public class HelloWorldExample {
 
 	public static void main(String[] args) throws Exception {
-		// 设置系统时间格式
+		// 璁剧疆绯荤粺鏃堕棿鏍煎紡
 		System.setProperty("drools.dateformat", "yyyy-MM-dd HH:mm:ss");
-		
-		//String filepath = "D:/workspace2/DroolsDemo/src/org/drools/examples/HelloWorld.drl";
-		String filepath2 = "D:/workspace2/DroolsDemo/src/org/drools/examples/Practise.drl";
-		
+
+		// String filepath = "D:/workspace2/DroolsDemo/src/org/drools/examples/HelloWorld.drl";
+		String filepath2 = "E:/chromedownload/DroolsDemo/DroolsDemo/src/org/drools/examples/Practise.drl";
+
 		final Reader source = new FileReader(filepath2);
-		//final Reader source2 = new FileReader(filepath);
-//		final PackageBuilderConfiguration configuration = new PackageBuilderConfiguration();
+		// final Reader source2 = new FileReader(filepath);
+		// final PackageBuilderConfiguration configuration = new PackageBuilderConfiguration();
 		final PackageBuilder builder = new PackageBuilder();
 
 		// this will parse and compile in one step
 		builder.addPackageFromDrl(source);
-		//builder.addPackageFromDrl(source2);
-		
+		// builder.addPackageFromDrl(source2);
+
 		// Check the builder for errors
 		if (builder.hasErrors()) {
-			System.out.println("规则脚本存在错误:"+builder.getErrors().toString());
+			System.out.println("瑙勫垯鑴氭湰瀛樺湪閿欒:" + builder.getErrors().toString());
 		}
 
 		// get the compiled package (which is serializable)
@@ -46,35 +46,35 @@ public class HelloWorldExample {
 		// add the package to a rulebase (deploy the rule package).
 		final RuleBase ruleBase = RuleBaseFactory.newRuleBase();
 		Package[] packages = ruleBase.getPackages();
-		for(Package p :packages){
+		for (Package p : packages) {
 			ruleBase.removePackage(p.getName());
 		}
-		
+
 		ruleBase.addPackage(pkg);
-		
+
 		final StatefulSession session = ruleBase.newStatefulSession();
-//		session.setGlobal("myGlobalList", new ArrayList<String>());
-		
-//		session.addEventListener(new DebugAgendaEventListener());
-//		session.addEventListener(new DebugWorkingMemoryEventListener());
+		// session.setGlobal("myGlobalList", new ArrayList<String>());
+
+		// session.addEventListener(new DebugAgendaEventListener());
+		// session.addEventListener(new DebugWorkingMemoryEventListener());
 
 		final List<Order> orders = new ArrayList<Order>();
 		final Order o = new Order();
 		o.setName("qu");
 		orders.add(o);
-		
+
 		final Message message = new Message();
 		message.setMessage("Hello World");
 		message.setStatus(Message.HELLO);
 		message.setOrders(orders);
-		message.names.add("网易");
+		message.names.add("缃戞槗");
 		message.setTime(new Date());
-		
+
 		message.setStringUtils(new StringUtils());
-		
+
 		session.insert(o);
 		session.insert(message);
-				
+
 		// fire
 		session.fireAllRules(new org.drools.spi.AgendaFilter() {
 			public boolean accept(Activation activation) {
@@ -82,14 +82,14 @@ public class HelloWorldExample {
 			}
 		});
 		session.dispose();
-		
+
 		QueryResults qrs = session.getQueryResults("pcount");
 		System.out.println(qrs.size());
-		
-		QueryResults qrs2 = session.getQueryResults("pc2", new Object[]{10});
+
+		QueryResults qrs2 = session.getQueryResults("pc2", new Object[] { 10 });
 		System.out.println(qrs2.size());
-		
-		System.out.println("引擎执行完成后："+message.getStatus()+message.getNames());
+
+		System.out.println("寮曟搸鎵ц瀹屾垚鍚庯細" + message.getStatus() + message.getNames());
 	}
 
 	public static class Message {
@@ -99,19 +99,19 @@ public class HelloWorldExample {
 		private String message;
 
 		private int status;
-		
+
 		private Date time;
-		
+
 		private List<Order> orders;
-		
+
 		private StringUtils stringUtils;
-		
+
 		public List<String> names = new ArrayList<String>();
 
 		public Message() {
 
 		}
-		
+
 		public StringUtils getStringUtils() {
 			return stringUtils;
 		}
@@ -120,7 +120,7 @@ public class HelloWorldExample {
 			this.stringUtils = stringUtils;
 		}
 
-		public int getFromDB(){
+		public int getFromDB() {
 			return stringUtils.getc();
 		}
 
@@ -163,9 +163,9 @@ public class HelloWorldExample {
 		public void setTime(Date time) {
 			this.time = time;
 		}
-		
+
 	}
-	
+
 	public static class Order {
 		private String name;
 

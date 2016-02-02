@@ -37,7 +37,7 @@ public class PointDomain {
 	 * @since [产品/模块版本](可选)
 	 */
 	public void recordPointLog(String userName, String type) {
-		System.out.println("增加对" + userName + "的类型为" + type + "的积分操作记录.");
+		System.out.println("增加对 " + userName + " 的类型为 " + type + " 的积分操作记录.");
 	}
 
 	public String getUserName() {

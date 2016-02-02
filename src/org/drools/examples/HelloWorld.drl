@@ -3,14 +3,14 @@ package org.drools.examples
 import org.drools.examples.HelloWorldExample.Message;
 import org.drools.examples.StringUtils;
 
-# ¾²Ì¬·½·¨¿ÉÒÔÖ±½Ó´«Èë·½·¨ ÓÃ·¨: getIs()
+# é™æ€æ–¹æ³•å¯ä»¥ç›´æ¥ä¼ å…¥æ–¹æ³• ç”¨æ³•: getIs()
 #import org.drools.examples.StringUtils.getIs;
 
 function String getHello(){
 	return StringUtils.getIs();
 }
 
-# ÔÚ¹æÔòÖĞÉèÖÃÈ«¾Ö±äÁ¿²»ºÏÊÊ£¬ÔÚ´úÂëÖĞ²åÈëworkingmemory£¬È«¾Ö±äÁ¿²»ÓÃÓÚ´«µİÊı¾İ£¬¶øÓÃÓÚÌá¹©ºÍ½ÓÊÜÊı¾İ
+# åœ¨è§„åˆ™ä¸­è®¾ç½®å…¨å±€å˜é‡ä¸åˆé€‚ï¼Œåœ¨ä»£ç ä¸­æ’å…¥workingmemoryï¼Œå…¨å±€å˜é‡ä¸ç”¨äºä¼ é€’æ•°æ®ï¼Œè€Œç”¨äºæä¾›å’Œæ¥å—æ•°æ®
 #global java.util.List myGlobalList;
 
 #rule 1
@@ -23,8 +23,8 @@ when
 	#exists
    p : Message( status == 0, status < 1, message : message )
 then
-	// JAVA ÓïÒå´úÂë
-     System.out.println("·ûºÏ¹æÔòÆ¥Åä:message="+ message ); 
+	// JAVA è¯­ä¹‰ä»£ç 
+     System.out.println("ç¬¦åˆè§„åˆ™åŒ¹é…:message="+ message ); 
      modify ( p ) { message = "Goodbyte cruel world",
                     status = Message.GOODBYE };
     System.out.println(  getHello());

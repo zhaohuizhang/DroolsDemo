@@ -1,0 +1,25 @@
+package com.vip.drools.demo
+
+import com.vip.drools.demo.MerchantEntity;
+
+rule addBackNumsFee
+	// 发生退货,没退3笔加1元
+	salience 10
+	lock-on-active true
+	when
+		$merchantEntity:MerchantEntity(backNums >= 20)
+	then
+		$merchantEntity.setFee($merchantEntity.getFee()+$merchantEntity.getBackNums()/3);
+		$merchantEntity.recordLog($merchantEntity.getMerchantName(),"addBackNumsFee");
+end
+
+rule addBackMoneyFee
+	//  退货金额大于2000,加1元
+	salience 9
+	lock-on-active true
+	when
+		$merchantEntity : MerchantEntity(backMoney >= 2000)
+	then
+		$merchantEntity.setFee($merchantEntity.getFee()+1);
+		$merchantEntity.recordLog($merchantEntity.getMerchantName(),"addBackMoneyFee");
+end

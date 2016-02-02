@@ -18,11 +18,13 @@ rule birthdayPoint
 end
 
 rule billThisMonthPoint
-	// 2011-01-08 - 2011-08-08每月信用卡还款3次以上,美满3笔赠送30分
+	// 2016-01-01 - 2016-08-08每月信用卡还款3次以上,美满3笔赠送30分
 	salience 99
 	lock-on-active true
-	date-effective "2011-01-08 23:59:59"
-	date-expires "2011-08-08 23:59:59"
+	// date-effective "2016-01-01 23:59:59"
+	// date-expires "2016-08-08 23:59:59"
+	date-effective "2015-01-01 23:59:59"
+	date-expires "2015-08-08 23:59:59"
 	when
 		$pointDomain : PointDomain(billThisMonth >= 3)
 	then
